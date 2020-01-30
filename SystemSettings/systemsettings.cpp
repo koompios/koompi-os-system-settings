@@ -237,7 +237,68 @@ SystemSettings::SystemSettings() {
   MainLayout->addLayout(ModuleContainer);
   MainWidget->setLayout(MainLayout);
 
+  connect(UserSetting, SIGNAL(clicked()), this, SLOT(openUserSetting()));
+  connect(NetworkSettings, SIGNAL(clicked()), this,
+          SLOT(openNetworkSettings()));
+  connect(DateTimeSettings, SIGNAL(clicked()), this,
+          SLOT(openDateTimeSettings()));
+  connect(ThemeSettings, SIGNAL(clicked()), this, SLOT(openThemeSettings()));
+  connect(DisplaySettings, SIGNAL(clicked()), this,
+          SLOT(openDisplaySettings()));
+  connect(SoundSettings, SIGNAL(clicked()), this, SLOT(openSoundSettings()));
+  connect(KeyboardSettings, SIGNAL(clicked()), this,
+          SLOT(openKeyboardSettings()));
+  connect(MouseSettings, SIGNAL(clicked()), this, SLOT(openMouseSettings()));
+  connect(ApplicationSettings, SIGNAL(clicked()), this,
+          SLOT(openApplicationSettings()));
+  connect(SystemHardwareSettings, SIGNAL(clicked()), this,
+          SLOT(openSystemHardwareSettings()));
+  connect(SystemUpdateSettings, SIGNAL(clicked()), this,
+          SLOT(openSystemUpdateSettings()));
+
   this->setWindowTitle(AppName);
   this->setCentralWidget(MainWidget);
   this->resize(500, 500);
+}
+
+void SystemSettings::openUserSetting() { qDebug() << "UserSetting clicked"; }
+
+void SystemSettings::openNetworkSettings() {
+  qDebug() << "NetworkSettings clicked";
+}
+
+void SystemSettings::openDateTimeSettings() {
+  qDebug() << "DateTimeSettings clicked";
+}
+
+void SystemSettings::openThemeSettings() {
+  qDebug() << "ThemeSettings clicked";
+}
+
+void SystemSettings::openDisplaySettings() {
+  qDebug() << "DisplaySettings clicked";
+}
+
+void SystemSettings::openSoundSettings() {
+  qDebug() << "SoundSettings clicked";
+}
+
+void SystemSettings::openKeyboardSettings() {
+  qDebug() << "KeyboardSettings clicked";
+}
+
+void SystemSettings::openMouseSettings() {
+  qDebug() << "MouseSettings clicked";
+}
+
+void SystemSettings::openApplicationSettings() {
+  qDebug() << "ApplicationSettings clicked";
+}
+
+void SystemSettings::openSystemHardwareSettings() {
+  qDebug() << "SystemHardwareSettings clicked";
+}
+
+void SystemSettings::openSystemUpdateSettings() {
+  qDebug() << "SystemUpdateSettings clicked";
 }
