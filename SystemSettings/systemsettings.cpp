@@ -92,56 +92,17 @@ SystemSettings::SystemSettings()
     QToolButton* SystemHardwareSettings = new QToolButton(this);
     QToolButton* SystemUpdateSettings = new QToolButton(this);
 
-    this->MenuButton(
-        UserSetting,
-        "yast-users",
-        "UserSettingButton",
-        "Users");
-    this->MenuButton(
-        NetworkSettings,
-        "yast-network-group",
-        "NetworkSettingsButton",
-        "Network");
-    this->MenuButton(
-        DateTimeSettings,
-        "preferences-system-time",
-        "DateTimeSettingsButton",
-        "DateTime");
-    this->MenuButton(
-        ThemeSettings,
-        "preferences-desktop-theme",
-        "ThemeSettingsButton",
-        "Theme");
-    this->MenuButton(DisplaySettings,
-        "preferences-desktop-wallpaper",
-        "DisplaySettingsButton",
-        "Display");
-    this->MenuButton(
-        SoundSettings,
-        "preferences-desktop-sound",
-        "SoundSettingsButton",
-        "Sound");
-    this->MenuButton(KeyboardSettings,
-        "preferences-desktop-keyboard",
-        "KeyboardSettingsButton",
-        "Keyboard");
-    this->MenuButton(
-        MouseSettings,
-        "preferences-desktop-mouse",
-        "MouseSettingsButton",
-        "Mouse");
-    this->MenuButton(ApplicationSettings,
-        "application-octet-stream",
-        "ApplicationSettingsButton",
-        "Applications");
-    this->MenuButton(SystemHardwareSettings,
-        "yast-hwinfo",
-        "SystemHardwareSettingsButton",
-        "System Hardware");
-    this->MenuButton(SystemUpdateSettings,
-        "yast-update",
-        "SystemUpdateSettingsButton",
-        "System Upates");
+    this->MenuButton(UserSetting, "yast-users", "UserSettingButton", "Users");
+    this->MenuButton(NetworkSettings, "yast-network-group", "NetworkSettingsButton", "Network");
+    this->MenuButton(DateTimeSettings, "preferences-system-time", "DateTimeSettingsButton", "DateTime");
+    this->MenuButton(ThemeSettings, "preferences-desktop-theme", "ThemeSettingsButton", "Theme");
+    this->MenuButton(DisplaySettings, "preferences-desktop-wallpaper", "DisplaySettingsButton", "Display");
+    this->MenuButton(SoundSettings, "preferences-desktop-sound", "SoundSettingsButton", "Sound");
+    this->MenuButton(KeyboardSettings, "preferences-desktop-keyboard", "KeyboardSettingsButton", "Keyboard");
+    this->MenuButton(MouseSettings, "preferences-desktop-mouse", "MouseSettingsButton", "Mouse");
+    this->MenuButton(ApplicationSettings, "application-octet-stream", "ApplicationSettingsButton", "Applications");
+    this->MenuButton(SystemHardwareSettings, "yast-hwinfo", "SystemHardwareSettingsButton", "System Hardware");
+    this->MenuButton(SystemUpdateSettings, "yast-update", "SystemUpdateSettingsButton", "System Upates");
 
     // 6.2 Add bottons to layout
     ModuleContainer->addWidget(UserSetting, 1, 1);
@@ -174,40 +135,42 @@ SystemSettings::SystemSettings()
     QLabel* SystemUpdatePageLabel = new QLabel("System Update Settings");
 
     // Page Layout
-    QVBoxLayout* UserPageLayout = new QVBoxLayout(this);
-    QVBoxLayout* NetworkPageLayout = new QVBoxLayout(this);
-    QVBoxLayout* DateTimePageLayout = new QVBoxLayout(this);
-    QVBoxLayout* ThemePageLayout = new QVBoxLayout(this);
-    QVBoxLayout* DisplayPageLayout = new QVBoxLayout(this);
-    QVBoxLayout* SoundPageLayout = new QVBoxLayout(this);
-    QVBoxLayout* KeyboardPageLayout = new QVBoxLayout(this);
-    QVBoxLayout* MousePageLayout = new QVBoxLayout(this);
-    QVBoxLayout* ApplicationPageLayout = new QVBoxLayout(this);
-    QVBoxLayout* SystemHardwarePageLayout = new QVBoxLayout(this);
-    QVBoxLayout* SystemUpdatePageLayout = new QVBoxLayout(this);
+    QHBoxLayout* UserPageLayout = new QHBoxLayout(this);
+    QHBoxLayout* NetworkPageLayout = new QHBoxLayout(this);
+    QHBoxLayout* DateTimePageLayout = new QHBoxLayout(this);
+    QHBoxLayout* ThemePageLayout = new QHBoxLayout(this);
+    QHBoxLayout* DisplayPageLayout = new QHBoxLayout(this);
+    QHBoxLayout* SoundPageLayout = new QHBoxLayout(this);
+    QHBoxLayout* KeyboardPageLayout = new QHBoxLayout(this);
+    QHBoxLayout* MousePageLayout = new QHBoxLayout(this);
+    QHBoxLayout* ApplicationPageLayout = new QHBoxLayout(this);
+    QHBoxLayout* SystemHardwarePageLayout = new QHBoxLayout(this);
+    QHBoxLayout* SystemUpdatePageLayout = new QHBoxLayout(this);
     // BackButton
     QToolButton* UserPageBackHome = new QToolButton(this);
-    this->HomeButton(UserPageBackHome, "UserPageBackHome", "Back");
     QToolButton* NetworkPageBackHome = new QToolButton(this);
-    this->HomeButton(NetworkPageBackHome, "NetworkPageBackHome", "Back");
     QToolButton* DateTimePageBackHome = new QToolButton(this);
-    this->HomeButton(DateTimePageBackHome, "DateTimePageBackHome", "Back");
     QToolButton* ThemePageBackHome = new QToolButton(this);
-    this->HomeButton(ThemePageBackHome, "ThemePageBackHome", "Back");
     QToolButton* DisplayPageBackHome = new QToolButton(this);
-    this->HomeButton(DisplayPageBackHome, "DisplayPageBackHome", "Back");
     QToolButton* SoundPageBackHome = new QToolButton(this);
-    this->HomeButton(SoundPageBackHome, "SoundPageBackHome", "Back");
     QToolButton* KeyboardPageBackHome = new QToolButton(this);
-    this->HomeButton(KeyboardPageBackHome, "KeyboardPageBackHome", "Back");
     QToolButton* MousePageBackHome = new QToolButton(this);
-    this->HomeButton(MousePageBackHome, "MousePageBackHome", "Back");
     QToolButton* ApplicationPageBackHome = new QToolButton(this);
-    this->HomeButton(ApplicationPageBackHome, "ApplicationPageBackHome", "Back");
     QToolButton* SystemHardwarePageBackHome = new QToolButton(this);
-    this->HomeButton(SystemHardwarePageBackHome, "SystemHardwarePageBackHome", "Back");
     QToolButton* SystemUpdatePageBackHome = new QToolButton(this);
+
+    this->HomeButton(UserPageBackHome, "UserPageBackHome", "Back");
+    this->HomeButton(NetworkPageBackHome, "NetworkPageBackHome", "Back");
+    this->HomeButton(DateTimePageBackHome, "DateTimePageBackHome", "Back");
+    this->HomeButton(ThemePageBackHome, "ThemePageBackHome", "Back");
+    this->HomeButton(DisplayPageBackHome, "DisplayPageBackHome", "Back");
+    this->HomeButton(SoundPageBackHome, "SoundPageBackHome", "Back");
+    this->HomeButton(KeyboardPageBackHome, "KeyboardPageBackHome", "Back");
+    this->HomeButton(MousePageBackHome, "MousePageBackHome", "Back");
+    this->HomeButton(ApplicationPageBackHome, "ApplicationPageBackHome", "Back");
+    this->HomeButton(SystemHardwarePageBackHome, "SystemHardwarePageBackHome", "Back");
     this->HomeButton(SystemUpdatePageBackHome, "SystemUpdatePageBackHome", "Back");
+
     // Add Labels to layouts
     UserPageLayout->addWidget(UserPageBackHome);
     UserPageLayout->addWidget(UserPageLabel);
@@ -297,29 +260,16 @@ SystemSettings::SystemSettings()
     connect(SystemUpdatePageBackHome, SIGNAL(clicked()), this, SLOT(openHomePage()));
 
     connect(UserSetting, SIGNAL(clicked()), this, SLOT(openUserSetting()));
-    connect(
-        NetworkSettings, SIGNAL(clicked()), this, SLOT(openNetworkSettings()));
-    connect(
-        DateTimeSettings, SIGNAL(clicked()), this, SLOT(openDateTimeSettings()));
+    connect(NetworkSettings, SIGNAL(clicked()), this, SLOT(openNetworkSettings()));
+    connect(DateTimeSettings, SIGNAL(clicked()), this, SLOT(openDateTimeSettings()));
     connect(ThemeSettings, SIGNAL(clicked()), this, SLOT(openThemeSettings()));
-    connect(
-        DisplaySettings, SIGNAL(clicked()), this, SLOT(openDisplaySettings()));
+    connect(DisplaySettings, SIGNAL(clicked()), this, SLOT(openDisplaySettings()));
     connect(SoundSettings, SIGNAL(clicked()), this, SLOT(openSoundSettings()));
-    connect(
-        KeyboardSettings, SIGNAL(clicked()), this, SLOT(openKeyboardSettings()));
+    connect(KeyboardSettings, SIGNAL(clicked()), this, SLOT(openKeyboardSettings()));
     connect(MouseSettings, SIGNAL(clicked()), this, SLOT(openMouseSettings()));
-    connect(ApplicationSettings,
-        SIGNAL(clicked()),
-        this,
-        SLOT(openApplicationSettings()));
-    connect(SystemHardwareSettings,
-        SIGNAL(clicked()),
-        this,
-        SLOT(openSystemHardwareSettings()));
-    connect(SystemUpdateSettings,
-        SIGNAL(clicked()),
-        this,
-        SLOT(openSystemUpdateSettings()));
+    connect(ApplicationSettings, SIGNAL(clicked()), this, SLOT(openApplicationSettings()));
+    connect(SystemHardwareSettings, SIGNAL(clicked()), this, SLOT(openSystemHardwareSettings()));
+    connect(SystemUpdateSettings, SIGNAL(clicked()), this, SLOT(openSystemUpdateSettings()));
 
     // App settings
     this->setWindowTitle(AppName);

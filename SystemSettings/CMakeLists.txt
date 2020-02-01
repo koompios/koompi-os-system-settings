@@ -32,6 +32,30 @@ if(ANDROID)
     systemsettings.cpp
     systemsettings.h
     resource.qrc
+    application/application.cpp
+    application/application.h
+    datetime/datetime.cpp
+    datetime/datetime.h
+    display/display.cpp
+    display/display.h
+    hardware/hardware.cpp
+    hardware/hardware.h
+    keyboard/keyboard.cpp
+    keyboard/keyboard.h
+    mouse/mouse.cpp
+    mouse/mouse.h
+    network/network.cpp
+    network/network.h
+    power/power.cpp
+    power/power.h
+    sound/sound.cpp
+    sound/sound.h
+    theme/theme.cpp
+    theme/theme.h
+    update/update.cpp
+    update/update.h
+    user/user.cpp
+    user/user.h
   )
 else()
   add_executable(SystemSettings
@@ -39,6 +63,30 @@ else()
     systemsettings.cpp
     systemsettings.h
     resource.qrc
+    application/application.cpp
+    application/application.h
+    datetime/datetime.cpp
+    datetime/datetime.h
+    display/display.cpp
+    display/display.h
+    hardware/hardware.cpp
+    hardware/hardware.h
+    keyboard/keyboard.cpp
+    keyboard/keyboard.h
+    mouse/mouse.cpp
+    mouse/mouse.h
+    network/network.cpp
+    network/network.h
+    power/power.cpp
+    power/power.h
+    sound/sound.cpp
+    sound/sound.h
+    theme/theme.cpp
+    theme/theme.h
+    update/update.cpp
+    update/update.h
+    user/user.cpp
+    user/user.h
   )
 endif()
 
