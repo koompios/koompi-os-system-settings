@@ -1,8 +1,9 @@
 QToolButton {
+    color: #000;
     background-color: none;
     border: none;
 }
-QToolButton:hover {
+QToolButton:hover, QToolButton[text="Back"] {
     border: 2px solid #000 !important;
     background-color: rgba(51, 154, 240,0.1);
 }

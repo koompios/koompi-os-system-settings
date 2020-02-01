@@ -11,6 +11,7 @@
 #include <QGridLayout>
 #include <QHBoxLayout>
 #include <QLayout>
+#include <QStackedWidget>
 #include <QVBoxLayout>
 // UI Components
 #include <QIcon>
@@ -20,285 +21,374 @@
 // Style Components
 #include <QSizePolicy>
 
-SystemSettings::SystemSettings() {
-  QFile file(":/resource/styles/style.qss");
-  file.open(QFile::ReadOnly);
-  QString styleSheet = QLatin1String(file.readAll());
-  qDebug() << styleSheet << endl;
-  this->setStyleSheet(styleSheet);
+SystemSettings::SystemSettings()
+{
+    QFile file(":/resource/styles/style.css");
+    file.open(QFile::ReadOnly);
+    QString styleSheet = QLatin1String(file.readAll());
+    this->setStyleSheet(styleSheet);
 
-  // Declare all variables here
-  QString AppName = "System Settings"; // For global name
-  QLabel *AppLabel = new QLabel(this);
-  QLineEdit *SearchBox = new QLineEdit(this);
-  QToolButton *SearchButton = new QToolButton(this);
-  QWidget *MainWidget = new QWidget(this);
-  QVBoxLayout *MainLayout = new QVBoxLayout(this);
-  QHBoxLayout *SearchContainer = new QHBoxLayout(this);
-  QVBoxLayout *HeaderContainer = new QVBoxLayout(this);
-  QGridLayout *ModuleContainer = new QGridLayout(this);
-  QIcon searchIcon = QIcon::fromTheme("search");
-  // Initialize variables here
+    // Declare all variables here
+    AppPages = new QStackedWidget;
+    QString AppName = "System Settings"; // For global name
+    QLabel* AppLabel = new QLabel(this);
+    QLineEdit* SearchBox = new QLineEdit(this);
+    QToolButton* SearchButton = new QToolButton(this);
+    QWidget* MainWidget = new QWidget(this);
+    QVBoxLayout* MainLayout = new QVBoxLayout(this);
+    QHBoxLayout* SearchContainer = new QHBoxLayout(this);
+    QVBoxLayout* HeaderContainer = new QVBoxLayout(this);
+    QGridLayout* ModuleContainer = new QGridLayout(this);
+    QIcon searchIcon = QIcon::fromTheme("search");
+    // Initialize variables here
 
-  // 1. App Label
-  AppLabel->setText(AppName);
-  AppLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-  AppLabel->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-  AppLabel->setFixedHeight(80);
-  AppLabel->setMaximumHeight(80);
-  AppLabel->setContentsMargins(0, 0, 0, 0);
-  AppLabel->setStyleSheet("font-size: 32px; font-weight: bold;");
-  // 2. Search Box
-  SearchBox->setPlaceholderText("Search...");
-  SearchBox->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
-  SearchBox->setStyleSheet("border: 2px solid #000;");
-  SearchBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-  SearchBox->setFixedHeight(40);
-  SearchBox->setMinimumWidth(350);
-  SearchBox->setMaximumWidth(500);
-  // 3. Search Button
-  SearchButton->setIcon(searchIcon);
-  SearchButton->setIconSize(QSize(24, 24));
-  SearchButton->setFixedSize(40, 40);
-  SearchButton->setStyleSheet("border: 2px solid #000;");
-  // 4. Add search components to search layout
-  SearchContainer->addStretch(0);
-  SearchContainer->addWidget(SearchBox);
-  SearchContainer->addWidget(SearchButton);
-  SearchContainer->addStretch(0);
+    // 1. App Label
+    AppLabel->setText(AppName);
+    AppLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    AppLabel->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    AppLabel->setFixedHeight(80);
+    AppLabel->setMaximumHeight(80);
+    AppLabel->setContentsMargins(0, 0, 0, 0);
+    AppLabel->setStyleSheet("font-size: 32px; font-weight: bold;");
 
-  // 5. Header layout
-  HeaderContainer->addWidget(AppLabel);
-  HeaderContainer->addLayout(SearchContainer);
-  HeaderContainer->setStretch(0, 0);
+    // 2. Search Box
+    SearchBox->setPlaceholderText("Search...");
+    SearchBox->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+    SearchBox->setStyleSheet("border: 2px solid #000;");
+    SearchBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+    SearchBox->setFixedHeight(40);
+    SearchBox->setMinimumWidth(350);
+    SearchBox->setMaximumWidth(500);
 
-  // 6. Setting list layout
-  // 6.1 List of setting buttons
-  QIcon userIcon = QIcon::fromTheme("yast-users");
-  QToolButton *UserSetting = new QToolButton(this);
-  UserSetting->setText("Users");
-  UserSetting->setIcon(userIcon);
-  UserSetting->setIconSize(QSize(64, 64));
-  UserSetting->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-  UserSetting->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-  UserSetting->setMaximumSize(QSize(200, 200));
-  UserSetting->setMinimumSize(QSize(125, 125));
+    // 3. Search Button
+    SearchButton->setIcon(searchIcon);
+    SearchButton->setIconSize(QSize(24, 24));
+    SearchButton->setFixedSize(40, 40);
+    SearchButton->setStyleSheet("border: 2px solid #000;");
 
-  QIcon networkIcon = QIcon::fromTheme("yast-network-group");
-  QToolButton *NetworkSettings = new QToolButton(this);
-  NetworkSettings->setText("Network");
-  NetworkSettings->setIcon(networkIcon);
-  NetworkSettings->setIconSize(QSize(64, 64));
-  NetworkSettings->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-  NetworkSettings->setSizePolicy(QSizePolicy::Expanding,
-                                 QSizePolicy::Expanding);
-  NetworkSettings->setMaximumSize(QSize(200, 200));
-  NetworkSettings->setMinimumSize(QSize(125, 125));
+    // 4. Add search components to search layout
+    SearchContainer->addStretch(0);
+    SearchContainer->addWidget(SearchBox);
+    SearchContainer->addWidget(SearchButton);
+    SearchContainer->addStretch(0);
 
-  QIcon dateTimeIcon = QIcon::fromTheme("preferences-system-time");
-  QToolButton *DateTimeSettings = new QToolButton(this);
-  DateTimeSettings->setText("DateTime");
-  DateTimeSettings->setIcon(dateTimeIcon);
-  DateTimeSettings->setIconSize(QSize(64, 64));
-  DateTimeSettings->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-  DateTimeSettings->setSizePolicy(QSizePolicy::Expanding,
-                                  QSizePolicy::Expanding);
-  DateTimeSettings->setMaximumSize(QSize(200, 200));
-  DateTimeSettings->setMinimumSize(QSize(125, 125));
+    // 5. Header layout
+    HeaderContainer->addWidget(AppLabel);
+    HeaderContainer->addLayout(SearchContainer);
+    HeaderContainer->setStretch(0, 0);
 
-  QIcon themeIcon = QIcon::fromTheme("preferences-desktop-theme");
-  QToolButton *ThemeSettings = new QToolButton(this);
-  ThemeSettings->setObjectName("ThemeButton");
-  ThemeSettings->setIcon(themeIcon);
-  ThemeSettings->setIconSize(QSize(64, 64));
-  ThemeSettings->setText("Themes");
-  ThemeSettings->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-  ThemeSettings->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-  ThemeSettings->setMaximumSize(QSize(200, 200));
-  ThemeSettings->setMinimumSize(QSize(125, 125));
-  ThemeSettings->setContentsMargins(20, 20, 20, 20);
+    // 6. Setting list layout
+    // 6.1 List of setting buttons
+    //    QIcon homeIcon = QIcon::fromTheme("preferences-system");
+    //    QToolButton* BackHome = new QToolButton(this);
+    //    BackHome->setText("Home");
+    //    BackHome->setIcon(homeIcon);
+    //    BackHome->setIconSize(QSize(64, 64));
+    //    BackHome->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 
-  QIcon displayIcon = QIcon::fromTheme("preferences-desktop-wallpaper");
-  QToolButton *DisplaySettings = new QToolButton(this);
-  DisplaySettings->setObjectName("ThemeButton");
-  DisplaySettings->setIcon(displayIcon);
-  DisplaySettings->setIconSize(QSize(64, 64));
-  DisplaySettings->setText("Display");
-  DisplaySettings->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-  DisplaySettings->setSizePolicy(QSizePolicy::Expanding,
-                                 QSizePolicy::Expanding);
-  DisplaySettings->setMaximumSize(QSize(200, 200));
-  DisplaySettings->setMinimumSize(QSize(125, 125));
-  DisplaySettings->setContentsMargins(20, 20, 20, 20);
+    QToolButton* UserSetting = new QToolButton(this);
+    QToolButton* NetworkSettings = new QToolButton(this);
+    QToolButton* DateTimeSettings = new QToolButton(this);
+    QToolButton* ThemeSettings = new QToolButton(this);
+    QToolButton* DisplaySettings = new QToolButton(this);
+    QToolButton* SoundSettings = new QToolButton(this);
+    QToolButton* KeyboardSettings = new QToolButton(this);
+    QToolButton* MouseSettings = new QToolButton(this);
+    QToolButton* ApplicationSettings = new QToolButton(this);
+    QToolButton* SystemHardwareSettings = new QToolButton(this);
+    QToolButton* SystemUpdateSettings = new QToolButton(this);
 
-  QIcon soundIcon = QIcon::fromTheme("preferences-desktop-sound");
-  QToolButton *SoundSettings = new QToolButton(this);
-  SoundSettings->setObjectName("ThemeButton");
-  SoundSettings->setIcon(soundIcon);
-  SoundSettings->setIconSize(QSize(64, 64));
-  SoundSettings->setText("Sound");
-  SoundSettings->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-  SoundSettings->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-  SoundSettings->setMaximumSize(QSize(200, 200));
-  SoundSettings->setMinimumSize(QSize(125, 125));
-  SoundSettings->setContentsMargins(20, 20, 20, 20);
+    this->MenuButton(
+        UserSetting,
+        "yast-users",
+        "UserSettingButton",
+        "Users");
+    this->MenuButton(
+        NetworkSettings,
+        "yast-network-group",
+        "NetworkSettingsButton",
+        "Network");
+    this->MenuButton(
+        DateTimeSettings,
+        "preferences-system-time",
+        "DateTimeSettingsButton",
+        "DateTime");
+    this->MenuButton(
+        ThemeSettings,
+        "preferences-desktop-theme",
+        "ThemeSettingsButton",
+        "Theme");
+    this->MenuButton(DisplaySettings,
+        "preferences-desktop-wallpaper",
+        "DisplaySettingsButton",
+        "Display");
+    this->MenuButton(
+        SoundSettings,
+        "preferences-desktop-sound",
+        "SoundSettingsButton",
+        "Sound");
+    this->MenuButton(KeyboardSettings,
+        "preferences-desktop-keyboard",
+        "KeyboardSettingsButton",
+        "Keyboard");
+    this->MenuButton(
+        MouseSettings,
+        "preferences-desktop-mouse",
+        "MouseSettingsButton",
+        "Mouse");
+    this->MenuButton(ApplicationSettings,
+        "application-octet-stream",
+        "ApplicationSettingsButton",
+        "Applications");
+    this->MenuButton(SystemHardwareSettings,
+        "yast-hwinfo",
+        "SystemHardwareSettingsButton",
+        "System Hardware");
+    this->MenuButton(SystemUpdateSettings,
+        "yast-update",
+        "SystemUpdateSettingsButton",
+        "System Upates");
 
-  QIcon keyboardIcon = QIcon::fromTheme("preferences-desktop-keyboard");
-  QToolButton *KeyboardSettings = new QToolButton(this);
-  KeyboardSettings->setObjectName("ThemeButton");
-  KeyboardSettings->setIcon(keyboardIcon);
-  KeyboardSettings->setIconSize(QSize(64, 64));
-  KeyboardSettings->setText("Keyboard");
-  KeyboardSettings->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-  KeyboardSettings->setSizePolicy(QSizePolicy::Expanding,
-                                  QSizePolicy::Expanding);
-  KeyboardSettings->setMaximumSize(QSize(200, 200));
-  KeyboardSettings->setMinimumSize(QSize(125, 125));
-  KeyboardSettings->setContentsMargins(20, 20, 20, 20);
+    // 6.2 Add bottons to layout
+    ModuleContainer->addWidget(UserSetting, 1, 1);
+    ModuleContainer->addWidget(NetworkSettings, 1, 2);
+    ModuleContainer->addWidget(DateTimeSettings, 1, 3);
+    ModuleContainer->addWidget(ThemeSettings, 2, 1);
+    ModuleContainer->addWidget(DisplaySettings, 2, 2);
+    ModuleContainer->addWidget(SoundSettings, 2, 3);
+    ModuleContainer->addWidget(KeyboardSettings, 3, 1);
+    ModuleContainer->addWidget(MouseSettings, 3, 2);
+    ModuleContainer->addWidget(ApplicationSettings, 3, 3);
+    ModuleContainer->addWidget(SystemHardwareSettings, 4, 1);
+    ModuleContainer->addWidget(SystemUpdateSettings, 4, 2);
 
-  QIcon mouseIcon = QIcon::fromTheme("preferences-desktop-mouse");
-  QToolButton *MouseSettings = new QToolButton(this);
-  MouseSettings->setObjectName("ThemeButton");
-  MouseSettings->setIcon(mouseIcon);
-  MouseSettings->setIconSize(QSize(64, 64));
-  MouseSettings->setText("Mouse");
-  MouseSettings->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-  MouseSettings->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-  MouseSettings->setMaximumSize(QSize(200, 200));
-  MouseSettings->setMinimumSize(QSize(125, 125));
-  MouseSettings->setContentsMargins(20, 20, 20, 20);
+    MainLayout->addLayout(HeaderContainer);
+    MainLayout->addLayout(ModuleContainer);
+    MainWidget->setLayout(MainLayout);
 
-  QIcon appIcon = QIcon::fromTheme("application-octet-stream");
-  QToolButton *ApplicationSettings = new QToolButton(this);
-  ApplicationSettings->setObjectName("ThemeButton");
-  ApplicationSettings->setIcon(appIcon);
-  ApplicationSettings->setIconSize(QSize(64, 64));
-  ApplicationSettings->setText("Applications");
-  ApplicationSettings->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-  ApplicationSettings->setSizePolicy(QSizePolicy::Expanding,
-                                     QSizePolicy::Expanding);
-  ApplicationSettings->setMaximumSize(QSize(200, 200));
-  ApplicationSettings->setMinimumSize(QSize(125, 125));
-  ApplicationSettings->setContentsMargins(20, 20, 20, 20);
+    // Page Labels
+    QLabel* UserPageLabel = new QLabel("User Settings");
+    QLabel* NetworkPageLabel = new QLabel("Network Settings");
+    QLabel* DateTimePageLabel = new QLabel("DateTime Settings");
+    QLabel* ThemePageLabel = new QLabel("Theme Settings");
+    QLabel* DisplayPageLabel = new QLabel("Display Settings");
+    QLabel* SoundPageLabel = new QLabel("Sound Settings");
+    QLabel* KeyboardPageLabel = new QLabel("Keyboard Settings");
+    QLabel* MousePageLabel = new QLabel("Mouse Settings");
+    QLabel* ApplicationPageLabel = new QLabel("Application Settings");
+    QLabel* SystemHardwarePageLabel = new QLabel("System Hardware Settings");
+    QLabel* SystemUpdatePageLabel = new QLabel("System Update Settings");
 
-  QIcon systemIcon = QIcon::fromTheme("yast-hwinfo");
-  QToolButton *SystemHardwareSettings = new QToolButton(this);
-  SystemHardwareSettings->setObjectName("ThemeButton");
-  SystemHardwareSettings->setIcon(systemIcon);
-  SystemHardwareSettings->setIconSize(QSize(64, 64));
-  SystemHardwareSettings->setText("System");
-  SystemHardwareSettings->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-  SystemHardwareSettings->setSizePolicy(QSizePolicy::Expanding,
-                                        QSizePolicy::Expanding);
-  SystemHardwareSettings->setMaximumSize(QSize(200, 200));
-  SystemHardwareSettings->setMinimumSize(QSize(125, 125));
-  SystemHardwareSettings->setContentsMargins(20, 20, 20, 20);
+    // Page Layout
+    QVBoxLayout* UserPageLayout = new QVBoxLayout(this);
+    QVBoxLayout* NetworkPageLayout = new QVBoxLayout(this);
+    QVBoxLayout* DateTimePageLayout = new QVBoxLayout(this);
+    QVBoxLayout* ThemePageLayout = new QVBoxLayout(this);
+    QVBoxLayout* DisplayPageLayout = new QVBoxLayout(this);
+    QVBoxLayout* SoundPageLayout = new QVBoxLayout(this);
+    QVBoxLayout* KeyboardPageLayout = new QVBoxLayout(this);
+    QVBoxLayout* MousePageLayout = new QVBoxLayout(this);
+    QVBoxLayout* ApplicationPageLayout = new QVBoxLayout(this);
+    QVBoxLayout* SystemHardwarePageLayout = new QVBoxLayout(this);
+    QVBoxLayout* SystemUpdatePageLayout = new QVBoxLayout(this);
+    // BackButton
+    QToolButton* UserPageBackHome = new QToolButton(this);
+    this->HomeButton(UserPageBackHome, "UserPageBackHome", "Back");
+    QToolButton* NetworkPageBackHome = new QToolButton(this);
+    this->HomeButton(NetworkPageBackHome, "NetworkPageBackHome", "Back");
+    QToolButton* DateTimePageBackHome = new QToolButton(this);
+    this->HomeButton(DateTimePageBackHome, "DateTimePageBackHome", "Back");
+    QToolButton* ThemePageBackHome = new QToolButton(this);
+    this->HomeButton(ThemePageBackHome, "ThemePageBackHome", "Back");
+    QToolButton* DisplayPageBackHome = new QToolButton(this);
+    this->HomeButton(DisplayPageBackHome, "DisplayPageBackHome", "Back");
+    QToolButton* SoundPageBackHome = new QToolButton(this);
+    this->HomeButton(SoundPageBackHome, "SoundPageBackHome", "Back");
+    QToolButton* KeyboardPageBackHome = new QToolButton(this);
+    this->HomeButton(KeyboardPageBackHome, "KeyboardPageBackHome", "Back");
+    QToolButton* MousePageBackHome = new QToolButton(this);
+    this->HomeButton(MousePageBackHome, "MousePageBackHome", "Back");
+    QToolButton* ApplicationPageBackHome = new QToolButton(this);
+    this->HomeButton(ApplicationPageBackHome, "ApplicationPageBackHome", "Back");
+    QToolButton* SystemHardwarePageBackHome = new QToolButton(this);
+    this->HomeButton(SystemHardwarePageBackHome, "SystemHardwarePageBackHome", "Back");
+    QToolButton* SystemUpdatePageBackHome = new QToolButton(this);
+    this->HomeButton(SystemUpdatePageBackHome, "SystemUpdatePageBackHome", "Back");
+    // Add Labels to layouts
+    UserPageLayout->addWidget(UserPageBackHome);
+    UserPageLayout->addWidget(UserPageLabel);
 
-  QIcon updateIcon = QIcon::fromTheme("yast-update");
-  QToolButton *SystemUpdateSettings = new QToolButton(this);
-  SystemUpdateSettings->setObjectName("ThemeButton");
-  SystemUpdateSettings->setIcon(updateIcon);
-  SystemUpdateSettings->setIconSize(QSize(64, 64));
-  SystemUpdateSettings->setText("Update");
-  SystemUpdateSettings->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-  SystemUpdateSettings->setSizePolicy(QSizePolicy::Expanding,
-                                      QSizePolicy::Expanding);
-  SystemUpdateSettings->setMaximumSize(QSize(200, 200));
-  SystemUpdateSettings->setMinimumSize(QSize(125, 125));
-  SystemUpdateSettings->setContentsMargins(20, 20, 20, 20);
+    NetworkPageLayout->addWidget(NetworkPageBackHome);
+    NetworkPageLayout->addWidget(NetworkPageLabel);
 
-  // 6.2 set button object name
-  UserSetting->setObjectName("UserSettingButton");
-  NetworkSettings->setObjectName("NetworkSettingsButton");
-  DateTimeSettings->setObjectName("DateTimeSettingsButton");
-  ThemeSettings->setObjectName("ThemeSettingsButton");
-  DisplaySettings->setObjectName("DisplaySettingsButton");
-  SoundSettings->setObjectName("SoundSettingsButton");
-  KeyboardSettings->setObjectName("KeyboardSettingsButton");
-  MouseSettings->setObjectName("MouseSettingsButton");
-  ApplicationSettings->setObjectName("ApplicationSettingsButton");
-  SystemHardwareSettings->setObjectName("SystemHardwareSettingsButton");
-  SystemUpdateSettings->setObjectName("SystemUpdateSettingsButton");
+    DateTimePageLayout->addWidget(DateTimePageBackHome);
+    DateTimePageLayout->addWidget(DateTimePageLabel);
 
-  // 6.3 Add bottons to layout
-  ModuleContainer->addWidget(UserSetting, 1, 1);
-  ModuleContainer->addWidget(NetworkSettings, 1, 2);
-  ModuleContainer->addWidget(DateTimeSettings, 1, 3);
-  ModuleContainer->addWidget(ThemeSettings, 2, 1);
-  ModuleContainer->addWidget(DisplaySettings, 2, 2);
-  ModuleContainer->addWidget(SoundSettings, 2, 3);
-  ModuleContainer->addWidget(KeyboardSettings, 3, 1);
-  ModuleContainer->addWidget(MouseSettings, 3, 2);
-  ModuleContainer->addWidget(ApplicationSettings, 3, 3);
-  ModuleContainer->addWidget(SystemHardwareSettings, 4, 1);
-  ModuleContainer->addWidget(SystemUpdateSettings, 4, 2);
+    ThemePageLayout->addWidget(ThemePageBackHome);
+    ThemePageLayout->addWidget(ThemePageLabel);
 
-  MainLayout->addLayout(HeaderContainer);
-  MainLayout->addLayout(ModuleContainer);
-  MainWidget->setLayout(MainLayout);
+    DisplayPageLayout->addWidget(DisplayPageBackHome);
+    DisplayPageLayout->addWidget(DisplayPageLabel);
 
-  connect(UserSetting, SIGNAL(clicked()), this, SLOT(openUserSetting()));
-  connect(NetworkSettings, SIGNAL(clicked()), this,
-          SLOT(openNetworkSettings()));
-  connect(DateTimeSettings, SIGNAL(clicked()), this,
-          SLOT(openDateTimeSettings()));
-  connect(ThemeSettings, SIGNAL(clicked()), this, SLOT(openThemeSettings()));
-  connect(DisplaySettings, SIGNAL(clicked()), this,
-          SLOT(openDisplaySettings()));
-  connect(SoundSettings, SIGNAL(clicked()), this, SLOT(openSoundSettings()));
-  connect(KeyboardSettings, SIGNAL(clicked()), this,
-          SLOT(openKeyboardSettings()));
-  connect(MouseSettings, SIGNAL(clicked()), this, SLOT(openMouseSettings()));
-  connect(ApplicationSettings, SIGNAL(clicked()), this,
-          SLOT(openApplicationSettings()));
-  connect(SystemHardwareSettings, SIGNAL(clicked()), this,
-          SLOT(openSystemHardwareSettings()));
-  connect(SystemUpdateSettings, SIGNAL(clicked()), this,
-          SLOT(openSystemUpdateSettings()));
+    SoundPageLayout->addWidget(SoundPageBackHome);
+    SoundPageLayout->addWidget(SoundPageLabel);
 
-  this->setWindowTitle(AppName);
-  this->setCentralWidget(MainWidget);
-  this->resize(500, 500);
+    KeyboardPageLayout->addWidget(KeyboardPageBackHome);
+    KeyboardPageLayout->addWidget(KeyboardPageLabel);
+
+    MousePageLayout->addWidget(MousePageBackHome);
+    MousePageLayout->addWidget(MousePageLabel);
+
+    ApplicationPageLayout->addWidget(ApplicationPageBackHome);
+    ApplicationPageLayout->addWidget(ApplicationPageLabel);
+
+    SystemHardwarePageLayout->addWidget(SystemHardwarePageBackHome);
+    SystemHardwarePageLayout->addWidget(SystemHardwarePageLabel);
+
+    SystemUpdatePageLayout->addWidget(SystemUpdatePageBackHome);
+    SystemUpdatePageLayout->addWidget(SystemUpdatePageLabel);
+
+    // Page Widget
+    QWidget* PageUserSettings = new QWidget(this);
+    QWidget* PageNetworkSettings = new QWidget(this);
+    QWidget* PageDateTimeSettings = new QWidget(this);
+    QWidget* PageThemeSettings = new QWidget(this);
+    QWidget* PageDisplaySettings = new QWidget(this);
+    QWidget* PageSoundSettings = new QWidget(this);
+    QWidget* PageKeyboardSettings = new QWidget(this);
+    QWidget* PageMouseSettings = new QWidget(this);
+    QWidget* PageApplicationSettings = new QWidget(this);
+    QWidget* PageSystemHardwareSettings = new QWidget(this);
+    QWidget* PageSystemUpdateSettings = new QWidget(this);
+
+    PageUserSettings->setLayout(UserPageLayout);
+    PageNetworkSettings->setLayout(NetworkPageLayout);
+    PageDateTimeSettings->setLayout(DateTimePageLayout);
+    PageThemeSettings->setLayout(ThemePageLayout);
+    PageDisplaySettings->setLayout(DisplayPageLayout);
+    PageSoundSettings->setLayout(SoundPageLayout);
+    PageKeyboardSettings->setLayout(KeyboardPageLayout);
+    PageMouseSettings->setLayout(MousePageLayout);
+    PageApplicationSettings->setLayout(ApplicationPageLayout);
+    PageSystemHardwareSettings->setLayout(SystemHardwarePageLayout);
+    PageSystemUpdateSettings->setLayout(SystemUpdatePageLayout);
+
+    // Set default page
+    AppPages->setCurrentWidget(MainWidget);
+    // Add widgets to page
+    AppPages->addWidget(MainWidget);
+    AppPages->addWidget(PageUserSettings);
+    AppPages->addWidget(PageNetworkSettings);
+    AppPages->addWidget(PageDateTimeSettings);
+    AppPages->addWidget(PageThemeSettings);
+    AppPages->addWidget(PageDisplaySettings);
+    AppPages->addWidget(PageSoundSettings);
+    AppPages->addWidget(PageKeyboardSettings);
+    AppPages->addWidget(PageMouseSettings);
+    AppPages->addWidget(PageApplicationSettings);
+    AppPages->addWidget(PageSystemHardwareSettings);
+    AppPages->addWidget(PageSystemUpdateSettings);
+
+    // Connect buttons to page
+    connect(UserPageBackHome, SIGNAL(clicked()), this, SLOT(openHomePage()));
+    connect(NetworkPageBackHome, SIGNAL(clicked()), this, SLOT(openHomePage()));
+    connect(DateTimePageBackHome, SIGNAL(clicked()), this, SLOT(openHomePage()));
+    connect(ThemePageBackHome, SIGNAL(clicked()), this, SLOT(openHomePage()));
+    connect(DisplayPageBackHome, SIGNAL(clicked()), this, SLOT(openHomePage()));
+    connect(SoundPageBackHome, SIGNAL(clicked()), this, SLOT(openHomePage()));
+    connect(KeyboardPageBackHome, SIGNAL(clicked()), this, SLOT(openHomePage()));
+    connect(MousePageBackHome, SIGNAL(clicked()), this, SLOT(openHomePage()));
+    connect(ApplicationPageBackHome, SIGNAL(clicked()), this, SLOT(openHomePage()));
+    connect(SystemHardwarePageBackHome, SIGNAL(clicked()), this, SLOT(openHomePage()));
+    connect(SystemUpdatePageBackHome, SIGNAL(clicked()), this, SLOT(openHomePage()));
+
+    connect(UserSetting, SIGNAL(clicked()), this, SLOT(openUserSetting()));
+    connect(
+        NetworkSettings, SIGNAL(clicked()), this, SLOT(openNetworkSettings()));
+    connect(
+        DateTimeSettings, SIGNAL(clicked()), this, SLOT(openDateTimeSettings()));
+    connect(ThemeSettings, SIGNAL(clicked()), this, SLOT(openThemeSettings()));
+    connect(
+        DisplaySettings, SIGNAL(clicked()), this, SLOT(openDisplaySettings()));
+    connect(SoundSettings, SIGNAL(clicked()), this, SLOT(openSoundSettings()));
+    connect(
+        KeyboardSettings, SIGNAL(clicked()), this, SLOT(openKeyboardSettings()));
+    connect(MouseSettings, SIGNAL(clicked()), this, SLOT(openMouseSettings()));
+    connect(ApplicationSettings,
+        SIGNAL(clicked()),
+        this,
+        SLOT(openApplicationSettings()));
+    connect(SystemHardwareSettings,
+        SIGNAL(clicked()),
+        this,
+        SLOT(openSystemHardwareSettings()));
+    connect(SystemUpdateSettings,
+        SIGNAL(clicked()),
+        this,
+        SLOT(openSystemUpdateSettings()));
+
+    // App settings
+    this->setWindowTitle(AppName);
+    this->setCentralWidget(AppPages);
+    this->resize(1000, 500);
 }
 
-void SystemSettings::openUserSetting() { qDebug() << "UserSetting clicked"; }
-
-void SystemSettings::openNetworkSettings() {
-  qDebug() << "NetworkSettings clicked";
+void SystemSettings::openHomePage()
+{
+    this->AppPages->setCurrentIndex(0);
 }
 
-void SystemSettings::openDateTimeSettings() {
-  qDebug() << "DateTimeSettings clicked";
+void SystemSettings::openUserSetting()
+{
+    this->AppPages->setCurrentIndex(1);
 }
 
-void SystemSettings::openThemeSettings() {
-  qDebug() << "ThemeSettings clicked";
+void SystemSettings::openNetworkSettings()
+{
+    this->AppPages->setCurrentIndex(2);
 }
 
-void SystemSettings::openDisplaySettings() {
-  qDebug() << "DisplaySettings clicked";
+void SystemSettings::openDateTimeSettings()
+{
+    this->AppPages->setCurrentIndex(3);
 }
 
-void SystemSettings::openSoundSettings() {
-  qDebug() << "SoundSettings clicked";
+void SystemSettings::openThemeSettings()
+{
+    this->AppPages->setCurrentIndex(4);
 }
 
-void SystemSettings::openKeyboardSettings() {
-  qDebug() << "KeyboardSettings clicked";
+void SystemSettings::openDisplaySettings()
+{
+    this->AppPages->setCurrentIndex(5);
 }
 
-void SystemSettings::openMouseSettings() {
-  qDebug() << "MouseSettings clicked";
+void SystemSettings::openSoundSettings()
+{
+    this->AppPages->setCurrentIndex(6);
 }
 
-void SystemSettings::openApplicationSettings() {
-  qDebug() << "ApplicationSettings clicked";
+void SystemSettings::openKeyboardSettings()
+{
+    this->AppPages->setCurrentIndex(7);
 }
 
-void SystemSettings::openSystemHardwareSettings() {
-  qDebug() << "SystemHardwareSettings clicked";
+void SystemSettings::openMouseSettings()
+{
+    this->AppPages->setCurrentIndex(8);
 }
 
-void SystemSettings::openSystemUpdateSettings() {
-  qDebug() << "SystemUpdateSettings clicked";
+void SystemSettings::openApplicationSettings()
+{
+    this->AppPages->setCurrentIndex(9);
+}
+
+void SystemSettings::openSystemHardwareSettings()
+{
+    this->AppPages->setCurrentIndex(10);
+}
+
+void SystemSettings::openSystemUpdateSettings()
+{
+    this->AppPages->setCurrentIndex(11);
 }
