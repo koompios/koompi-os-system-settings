@@ -79,12 +79,6 @@ SystemSettings::SystemSettings()
 
     // 6. Setting list layout
     // 6.1 List of setting buttons
-    //    QIcon homeIcon = QIcon::fromTheme("preferences-system");
-    //    QToolButton* BackHome = new QToolButton(this);
-    //    BackHome->setText("Home");
-    //    BackHome->setIcon(homeIcon);
-    //    BackHome->setIconSize(QSize(64, 64));
-    //    BackHome->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 
     QToolButton* UserSetting = new QToolButton(this);
     QToolButton* NetworkSettings = new QToolButton(this);
