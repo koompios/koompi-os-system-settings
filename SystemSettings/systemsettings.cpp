@@ -27,6 +27,10 @@ SystemSettings::SystemSettings()
     file.open(QFile::ReadOnly);
     QString styleSheet = QLatin1String(file.readAll());
     this->setStyleSheet(styleSheet);
+    QWidget * myTestWidget = new QWidget(this);
+    AppTemplateLayout = new TemplateLayout(this);
+    AppTemplateLayout->AppLayout(myTestWidget, "FU");
+
 
     // Declare all variables here
     AppPages = new QStackedWidget;
@@ -174,6 +178,7 @@ SystemSettings::SystemSettings()
     // Add Labels to layouts
     UserPageLayout->addWidget(UserPageBackHome);
     UserPageLayout->addWidget(UserPageLabel);
+    UserPageLayout->addWidget(AppTemplateLayout);
 
     NetworkPageLayout->addWidget(NetworkPageBackHome);
     NetworkPageLayout->addWidget(NetworkPageLabel);

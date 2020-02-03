@@ -1,6 +1,8 @@
 #ifndef SYSTEMSETTINGS_H
 #define SYSTEMSETTINGS_H
 // Header files
+#include "templatelayout.h"
+
 #include <QIcon>
 #include <QMainWindow>
 #include <QObject>
@@ -67,6 +69,7 @@ private slots:
 
 private:
     QStackedWidget* AppPages = nullptr;
+    TemplateLayout * AppTemplateLayout = nullptr;
 };
 
 #endif // SYSTEMSETTINGS_H

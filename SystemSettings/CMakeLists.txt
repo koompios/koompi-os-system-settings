@@ -56,6 +56,8 @@ if(ANDROID)
     update/update.h
     user/user.cpp
     user/user.h
+    templatelayout.cpp
+    templatelayout.h
   )
 else()
   add_executable(SystemSettings
@@ -87,6 +89,8 @@ else()
     update/update.h
     user/user.cpp
     user/user.h
+    templatelayout.cpp
+    templatelayout.h
   )
 endif()
 
