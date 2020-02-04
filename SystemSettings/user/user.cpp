@@ -62,21 +62,24 @@ user::user(QWidget *parent, QStackedWidget *widget)
   UserInfo->setIcon(QIcon::fromTheme("user"));
   UserInfo->setIconSize(QSize(32, 32));
   UserInfo->setText("My Profile");
-  UserInfo->setStyleSheet("text-align: left; padding: 2px; font-size: 12px;");
+  UserInfo->setStyleSheet("text-align: left; padding: 2px; font-size: 12px; "
+                          "background-color: none; boder: none;");
   UserInfo->setMaximumSize(200, 40);
   UserInfo->setMinimumSize(200, 40);
 
   AllUsers->setIcon(QIcon::fromTheme("group-users"));
   AllUsers->setIconSize(QSize(32, 32));
   AllUsers->setText("User Management");
-  AllUsers->setStyleSheet("text-align: left; padding: 2px; font-size: 12px;");
+  AllUsers->setStyleSheet("text-align: left; padding: 2px; font-size: 12px; "
+                          "background-color: none; boder: none;");
   AllUsers->setMaximumSize(200, 40);
   AllUsers->setMinimumSize(200, 40);
 
   AllGroups->setIcon(QIcon::fromTheme("go-home"));
   AllGroups->setIconSize(QSize(32, 32));
   AllGroups->setText("Groups Management");
-  AllGroups->setStyleSheet("text-align: left; padding: 2px; font-size: 12px;");
+  AllGroups->setStyleSheet("text-align: left; padding: 2px; font-size: 12px; "
+                           "background-color: none; boder: none;");
   AllGroups->setMaximumSize(200, 40);
   AllGroups->setMinimumSize(200, 40);
 
