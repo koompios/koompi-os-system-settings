@@ -1,9 +1,19 @@
 QToolButton {
-    color: #000;
+/*    color: #000;*/
     background-color: none;
     border: none;
+    text-align: left;
 }
-QToolButton:hover, QToolButton[text="Back"] {
+QToolButton:hover {
     border: 2px solid #000 !important;
     background-color: rgba(51, 154, 240,0.1);
+}
+
+QToolButton[name="BackButton"] {
+    background-color: rgba(51, 154, 240,0.1);
+}
+
+QHBoxLayout[name="HeaderContainer"] {
+    background-color: black !important;
+    border: 1px solid #000;
 }
