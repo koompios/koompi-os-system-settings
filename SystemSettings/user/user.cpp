@@ -20,19 +20,20 @@ user::user(QWidget *parent, QStackedWidget *widget)
 
   // Label Variables
   QLabel *AppHeaderLabel = new QLabel;
-  QLabel *ContentText = new QLabel;
+
   // Button Variables
   QToolButton *BackButton = new QToolButton;
-  QPushButton *UserInfo = new QPushButton;
-  QPushButton *AllUsers = new QPushButton;
-  QPushButton *AllGroups = new QPushButton;
+  QPushButton *UserInfoButton = new QPushButton;
+  QPushButton *AllUsersButton = new QPushButton;
+  QPushButton *AllGroupsButton = new QPushButton;
 
   // Layout Variables
   QHBoxLayout *AppHeaderLayout = new QHBoxLayout;
-  QVBoxLayout *CategoryMenuLayout = new QVBoxLayout;
+  QVBoxLayout *SubMenuLayout = new QVBoxLayout;
   QVBoxLayout *ContentLayout = new QVBoxLayout;
   QHBoxLayout *MainLayout = new QHBoxLayout;
   QVBoxLayout *AppLayout = new QVBoxLayout;
+  QScrollArea *MainArea = new QScrollArea;
 
   // 1. App Header
   // 1.1 App Label
@@ -59,47 +60,25 @@ user::user(QWidget *parent, QStackedWidget *widget)
 
   // 2. Main Layout
   // 2.1 SubCategoryMenu
-  UserInfo->setIcon(QIcon::fromTheme("user"));
-  UserInfo->setIconSize(QSize(32, 32));
-  UserInfo->setText("My Profile");
-  UserInfo->setStyleSheet("text-align: left; padding: 2px; font-size: 12px; "
-                          "background-color: none; boder: none;");
-  UserInfo->setMaximumSize(200, 40);
-  UserInfo->setMinimumSize(200, 40);
+  user::SubMenuButton(UserInfoButton, "My Profile", "user");
+  user::SubMenuButton(AllUsersButton, "User Management", "group-users");
+  user::SubMenuButton(AllGroupsButton, "Group Management", "go-home");
 
-  AllUsers->setIcon(QIcon::fromTheme("group-users"));
-  AllUsers->setIconSize(QSize(32, 32));
-  AllUsers->setText("User Management");
-  AllUsers->setStyleSheet("text-align: left; padding: 2px; font-size: 12px; "
-                          "background-color: none; boder: none;");
-  AllUsers->setMaximumSize(200, 40);
-  AllUsers->setMinimumSize(200, 40);
-
-  AllGroups->setIcon(QIcon::fromTheme("go-home"));
-  AllGroups->setIconSize(QSize(32, 32));
-  AllGroups->setText("Groups Management");
-  AllGroups->setStyleSheet("text-align: left; padding: 2px; font-size: 12px; "
-                           "background-color: none; boder: none;");
-  AllGroups->setMaximumSize(200, 40);
-  AllGroups->setMinimumSize(200, 40);
-
-  CategoryMenuLayout->setSpacing(10);
-  CategoryMenuLayout->addWidget(UserInfo);
-  CategoryMenuLayout->addWidget(AllUsers);
-  CategoryMenuLayout->addWidget(AllGroups);
-  CategoryMenuLayout->addStretch();
+  SubMenuLayout->setSpacing(10);
+  SubMenuLayout->addWidget(UserInfoButton);
+  SubMenuLayout->addWidget(AllUsersButton);
+  SubMenuLayout->addWidget(AllGroupsButton);
+  SubMenuLayout->addStretch();
   // 2.2 Content Area
+  QLabel *UserName = new QLabel;
+  QString name = qgetenv("USER");
+  UserName->setText(name.toUpper());
 
-  // Content
-  ContentText->setText(
-      "Main conentent\nMain conentent\nMain conentent\nMain conentent\n");
-
-  // Content layout
-  ContentLayout->addWidget(ContentText);
-  ContentLayout->addStretch();
+  MainArea->setWidget(UserName);
+  ContentLayout->addWidget(MainArea);
 
   // 3. Add Widgets to Mainlayout
-  MainLayout->addItem(CategoryMenuLayout);
+  MainLayout->addItem(SubMenuLayout);
   MainLayout->addItem(ContentLayout);
 
   // 4. Create master layout
@@ -111,4 +90,17 @@ user::user(QWidget *parent, QStackedWidget *widget)
 
   // 5. Set app layout
   setLayout(AppLayout);
+}
+
+QPushButton *user::SubMenuButton(QPushButton *button, QString name,
+                                 QString icon) {
+  button->setIcon(QIcon::fromTheme(icon));
+  button->setIconSize(QSize(32, 32));
+  button->setText(name);
+  button->setStyleSheet("text-align: left; padding: 2px; font-size: 12px; "
+                        "background-color: none;");
+  button->setMaximumSize(200, 40);
+  button->setMinimumSize(200, 40);
+
+  return button;
 }

@@ -136,92 +136,6 @@ SystemSettings::SystemSettings() {
   MainLayout->addLayout(ModuleContainer);
   MainWidget->setLayout(MainLayout);
 
-  // Page Labels
-  //  QLabel* UserPageLabel = new QLabel("User Settings");
-  QLabel *NetworkPageLabel = new QLabel("Network Settings");
-  QLabel *DateTimePageLabel = new QLabel("DateTime Settings");
-  QLabel *ThemePageLabel = new QLabel("Theme Settings");
-  QLabel *DisplayPageLabel = new QLabel("Display Settings");
-  QLabel *SoundPageLabel = new QLabel("Sound Settings");
-  QLabel *KeyboardPageLabel = new QLabel("Keyboard Settings");
-  QLabel *MousePageLabel = new QLabel("Mouse Settings");
-  QLabel *ApplicationPageLabel = new QLabel("Application Settings");
-  QLabel *SystemHardwarePageLabel = new QLabel("System Hardware Settings");
-  QLabel *SystemUpdatePageLabel = new QLabel("System Update Settings");
-
-  // Page Layout
-  QHBoxLayout *UserPageLayout = new QHBoxLayout;
-  QHBoxLayout *NetworkPageLayout = new QHBoxLayout;
-  QHBoxLayout *DateTimePageLayout = new QHBoxLayout;
-  QHBoxLayout *ThemePageLayout = new QHBoxLayout;
-  QHBoxLayout *DisplayPageLayout = new QHBoxLayout;
-  QHBoxLayout *SoundPageLayout = new QHBoxLayout;
-  QHBoxLayout *KeyboardPageLayout = new QHBoxLayout;
-  QHBoxLayout *MousePageLayout = new QHBoxLayout;
-  QHBoxLayout *ApplicationPageLayout = new QHBoxLayout;
-  QHBoxLayout *SystemHardwarePageLayout = new QHBoxLayout;
-  QHBoxLayout *SystemUpdatePageLayout = new QHBoxLayout;
-  // BackButton
-  QToolButton *UserPageBackHome = new QToolButton(this);
-  QToolButton *NetworkPageBackHome = new QToolButton(this);
-  QToolButton *DateTimePageBackHome = new QToolButton(this);
-  QToolButton *ThemePageBackHome = new QToolButton(this);
-  QToolButton *DisplayPageBackHome = new QToolButton(this);
-  QToolButton *SoundPageBackHome = new QToolButton(this);
-  QToolButton *KeyboardPageBackHome = new QToolButton(this);
-  QToolButton *MousePageBackHome = new QToolButton(this);
-  QToolButton *ApplicationPageBackHome = new QToolButton(this);
-  QToolButton *SystemHardwarePageBackHome = new QToolButton(this);
-  QToolButton *SystemUpdatePageBackHome = new QToolButton(this);
-
-  //  this->HomeButton(UserPageBackHome, "UserPageBackHome", "Back");
-  this->HomeButton(NetworkPageBackHome, "NetworkPageBackHome", "Back");
-  this->HomeButton(DateTimePageBackHome, "DateTimePageBackHome", "Back");
-  this->HomeButton(ThemePageBackHome, "ThemePageBackHome", "Back");
-  this->HomeButton(DisplayPageBackHome, "DisplayPageBackHome", "Back");
-  this->HomeButton(SoundPageBackHome, "SoundPageBackHome", "Back");
-  this->HomeButton(KeyboardPageBackHome, "KeyboardPageBackHome", "Back");
-  this->HomeButton(MousePageBackHome, "MousePageBackHome", "Back");
-  this->HomeButton(ApplicationPageBackHome, "ApplicationPageBackHome", "Back");
-  this->HomeButton(SystemHardwarePageBackHome, "SystemHardwarePageBackHome",
-                   "Back");
-  this->HomeButton(SystemUpdatePageBackHome, "SystemUpdatePageBackHome",
-                   "Back");
-
-  // Add Labels to layouts
-  //  UserPageLayout->addWidget(UserPageBackHome);
-  //  UserPageLayout->addWidget(UserPageLabel);
-
-  NetworkPageLayout->addWidget(NetworkPageBackHome);
-  NetworkPageLayout->addWidget(NetworkPageLabel);
-
-  DateTimePageLayout->addWidget(DateTimePageBackHome);
-  DateTimePageLayout->addWidget(DateTimePageLabel);
-
-  ThemePageLayout->addWidget(ThemePageBackHome);
-  ThemePageLayout->addWidget(ThemePageLabel);
-
-  DisplayPageLayout->addWidget(DisplayPageBackHome);
-  DisplayPageLayout->addWidget(DisplayPageLabel);
-
-  SoundPageLayout->addWidget(SoundPageBackHome);
-  SoundPageLayout->addWidget(SoundPageLabel);
-
-  KeyboardPageLayout->addWidget(KeyboardPageBackHome);
-  KeyboardPageLayout->addWidget(KeyboardPageLabel);
-
-  MousePageLayout->addWidget(MousePageBackHome);
-  MousePageLayout->addWidget(MousePageLabel);
-
-  ApplicationPageLayout->addWidget(ApplicationPageBackHome);
-  ApplicationPageLayout->addWidget(ApplicationPageLabel);
-
-  SystemHardwarePageLayout->addWidget(SystemHardwarePageBackHome);
-  SystemHardwarePageLayout->addWidget(SystemHardwarePageLabel);
-
-  SystemUpdatePageLayout->addWidget(SystemUpdatePageBackHome);
-  SystemUpdatePageLayout->addWidget(SystemUpdatePageLabel);
-
   // Page Widget
   QWidget *PageUserSettings = new QWidget(this);
   QWidget *PageNetworkSettings = new QWidget(this);
@@ -235,24 +149,11 @@ SystemSettings::SystemSettings() {
   QWidget *PageSystemHardwareSettings = new QWidget(this);
   QWidget *PageSystemUpdateSettings = new QWidget(this);
 
-  PageUserSettings->setLayout(UserPageLayout);
-  PageNetworkSettings->setLayout(NetworkPageLayout);
-  PageDateTimeSettings->setLayout(DateTimePageLayout);
-  PageThemeSettings->setLayout(ThemePageLayout);
-  PageDisplaySettings->setLayout(DisplayPageLayout);
-  PageSoundSettings->setLayout(SoundPageLayout);
-  PageKeyboardSettings->setLayout(KeyboardPageLayout);
-  PageMouseSettings->setLayout(MousePageLayout);
-  PageApplicationSettings->setLayout(ApplicationPageLayout);
-  PageSystemHardwareSettings->setLayout(SystemHardwarePageLayout);
-  PageSystemUpdateSettings->setLayout(SystemUpdatePageLayout);
-
-  UserPage = new user(this, AppPages);
+  PageUserSettings = new user(this, AppPages);
 
   // Add widgets to page
   AppPages->addWidget(MainWidget);
-  //  AppPages->addWidget(PageUserSettings);
-  AppPages->addWidget(UserPage);
+  AppPages->addWidget(PageUserSettings);
   AppPages->addWidget(PageNetworkSettings);
   AppPages->addWidget(PageDateTimeSettings);
   AppPages->addWidget(PageThemeSettings);
@@ -266,22 +167,6 @@ SystemSettings::SystemSettings() {
 
   // Set default page
   AppPages->setCurrentWidget(MainWidget);
-
-  // Connect buttons to page
-  connect(UserPageBackHome, SIGNAL(clicked()), this, SLOT(openHomePage()));
-  connect(NetworkPageBackHome, SIGNAL(clicked()), this, SLOT(openHomePage()));
-  connect(DateTimePageBackHome, SIGNAL(clicked()), this, SLOT(openHomePage()));
-  connect(ThemePageBackHome, SIGNAL(clicked()), this, SLOT(openHomePage()));
-  connect(DisplayPageBackHome, SIGNAL(clicked()), this, SLOT(openHomePage()));
-  connect(SoundPageBackHome, SIGNAL(clicked()), this, SLOT(openHomePage()));
-  connect(KeyboardPageBackHome, SIGNAL(clicked()), this, SLOT(openHomePage()));
-  connect(MousePageBackHome, SIGNAL(clicked()), this, SLOT(openHomePage()));
-  connect(ApplicationPageBackHome, SIGNAL(clicked()), this,
-          SLOT(openHomePage()));
-  connect(SystemHardwarePageBackHome, SIGNAL(clicked()), this,
-          SLOT(openHomePage()));
-  connect(SystemUpdatePageBackHome, SIGNAL(clicked()), this,
-          SLOT(openHomePage()));
 
   connect(UserSetting, SIGNAL(clicked()), this, SLOT(openUserSetting()));
   connect(NetworkSettings, SIGNAL(clicked()), this,
